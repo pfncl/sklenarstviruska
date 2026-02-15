@@ -1,0 +1,89 @@
+---
+import Icon from '../ui/Icon.astro';
+import { contact } from '../../data/contact';
+---
+
+<div class="topbar">
+  <div class="container topbar__inner">
+    <div class="topbar__info">
+      <a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="topbar__item">
+        <Icon name="phone" size={14} />
+        <span>{contact.phone}</span>
+      </a>
+      <a href={`mailto:${contact.email}`} class="topbar__item">
+        <Icon name="mail" size={14} />
+        <span>{contact.email}</span>
+      </a>
+      <span class="topbar__item topbar__item--address">
+        <Icon name="map-pin" size={14} />
+        <span>{contact.addressShort}</span>
+      </span>
+    </div>
+    <div class="topbar__social">
+      <a href={contact.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <Icon name="facebook" size={16} />
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .topbar {
+    background: var(--color-accent);
+    color: var(--color-white);
+    font-size: 0.8125rem;
+    padding: 0.5rem 0;
+  }
+
+  .topbar__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .topbar__info {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .topbar__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+
+  .topbar__item:hover {
+    opacity: 0.8;
+    color: var(--color-white);
+  }
+
+  .topbar__social a {
+    color: var(--color-white);
+    transition: opacity var(--transition);
+  }
+
+  .topbar__social a:hover {
+    opacity: 0.8;
+    color: var(--color-white);
+  }
+
+  @media (max-width: 778px) {
+    .topbar__item--address {
+      display: none;
+    }
+
+    .topbar__info {
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .topbar {
+      display: none;
+    }
+  }
+</style>

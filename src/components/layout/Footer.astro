@@ -1,0 +1,40 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="/" class="footer__logo">
+      <img src="/images/logo_sklo_footer.png" alt="Sklenářství Ruská" width="300" height="33" />
+    </a>
+    <p class="footer__copy">&copy; {year} | Všechna práva vyhrazena</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-dark);
+    color: var(--color-light-gray);
+    padding: var(--space-lg) 0;
+    text-align: center;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .footer__logo img {
+    height: 33px;
+    width: auto;
+    opacity: 0.9;
+  }
+
+  .footer__copy {
+    font-size: 0.8125rem;
+    color: var(--color-light-gray);
+    margin: 0;
+  }
+</style>

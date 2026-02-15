@@ -1,0 +1,151 @@
+---
+import { navigation } from '../../data/navigation';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+function isActive(href: string, current: string): boolean {
+  if (href === '/') return current === '/';
+  return current.startsWith(href);
+}
+---
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo">
+      <img src="/images/logo_sklo_web.png" alt="Sklenářství Ruská" width="409" height="71" />
+    </a>
+
+    <nav class="header__nav" aria-label="Hlavní navigace">
+      <ul class="header__menu">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={['header__link', { 'header__link--active': isActive(item.href, currentPath) }]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button
+      class="header__hamburger"
+      aria-label="Otevřít menu"
+      aria-expanded="false"
+      id="menu-toggle"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--color-white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+  }
+
+  .header__logo img {
+    height: 50px;
+    width: auto;
+  }
+
+  .header__menu {
+    display: flex;
+    list-style: none;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .header__link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--color-dark);
+    font-size: 0.9375rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    transition: color var(--transition);
+  }
+
+  .header__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transition: transform var(--transition);
+  }
+
+  .header__link:hover,
+  .header__link--active {
+    color: var(--color-accent);
+  }
+
+  .header__link:hover::after,
+  .header__link--active::after {
+    transform: scaleX(1);
+  }
+
+  .header__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .header__hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-dark);
+    transition: all var(--transition);
+  }
+
+  @media (max-width: 1024px) {
+    .header__inner {
+      height: var(--mobile-header-height);
+    }
+
+    .header__logo img {
+      height: 36px;
+    }
+
+    .header__nav {
+      display: none;
+    }
+
+    .header__hamburger {
+      display: flex;
+    }
+  }
+</style>
