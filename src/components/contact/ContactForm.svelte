@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { t, type Locale } from '../../i18n/translations';
+
   type Variant = 'poradna' | 'kontakt';
 
-  let { variant = 'kontakt' }: { variant?: Variant } = $props();
+  let { variant = 'kontakt', lang = 'cs' }: { variant?: Variant; lang?: Locale } = $props();
+  const i18n = $derived(t(lang));
 
   let name = $state('');
   let email = $state('');
@@ -33,7 +36,7 @@
       turnstileWidgetId = (window as any).turnstile.render(turnstileEl, {
         sitekey: '0x4AAAAAACb2orZs8ymvai7p',
         theme: 'light',
-        language: 'cs',
+        language: lang,
         callback: (token: string) => { turnstileToken = token; },
         'expired-callback': () => { turnstileToken = ''; },
         'error-callback': () => { turnstileToken = ''; },
@@ -67,7 +70,7 @@
     if (!isValid) return;
 
     if (!turnstileToken) {
-      errorMessage = 'Ověření nebylo dokončeno. Zkuste to prosím znovu.';
+      errorMessage = i18n.formErrorTurnstile;
       status = 'error';
       return;
     }
@@ -86,7 +89,7 @@
       });
 
       if (error) {
-        errorMessage = error.message || 'Při odesílání došlo k chybě. Zkuste to prosím znovu.';
+        errorMessage = error.message || i18n.formErrorGeneral;
         status = 'error';
       } else {
         status = 'success';
@@ -96,7 +99,7 @@
         message = '';
       }
     } catch {
-      errorMessage = 'Při odesílání došlo k chybě. Zkuste to prosím znovu.';
+      errorMessage = i18n.formErrorGeneral;
       status = 'error';
     }
   }
@@ -105,7 +108,7 @@
 <form class="form" onsubmit={handleSubmit} onfocusin={loadTurnstile} novalidate>
   {#if status === 'success'}
     <div class="form__alert form__alert--success">
-      Děkujeme za vaši zprávu! Ozveme se vám co nejdříve.
+      {i18n.formSuccess}
     </div>
   {/if}
 
@@ -119,7 +122,7 @@
     <input
       type="text"
       bind:value={name}
-      placeholder="Jméno *"
+      placeholder={i18n.formName}
       required
       class="form__input"
     />
@@ -129,7 +132,7 @@
     <input
       type="email"
       bind:value={email}
-      placeholder="E-mail *"
+      placeholder={i18n.formEmail}
       required
       class="form__input"
     />
@@ -139,7 +142,7 @@
     <input
       type="tel"
       bind:value={telephone}
-      placeholder={variant === 'kontakt' ? 'Telefon *' : 'Telefon'}
+      placeholder={variant === 'kontakt' ? i18n.formPhoneRequired : i18n.formPhoneOptional}
       required={variant === 'kontakt'}
       class="form__input"
     />
@@ -148,7 +151,7 @@
   <div class="form__field">
     <textarea
       bind:value={message}
-      placeholder="Zpráva *"
+      placeholder={i18n.formMessage}
       required
       rows="6"
       class="form__input form__textarea"
@@ -169,7 +172,7 @@
     class="form__submit"
     disabled={!isValid || status === 'submitting'}
   >
-    {status === 'submitting' ? 'Odesílám...' : 'Odeslat'}
+    {status === 'submitting' ? i18n.formSubmitting : i18n.formSubmit}
   </button>
 </form>
 

@@ -1,5 +1,12 @@
 ---
+import { t, type Locale } from '../../i18n/translations';
 
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const i18n = t(lang);
 ---
 
 <div class="hero-image">
@@ -8,7 +15,7 @@
       src="/images/homepage-slider.webp"
       srcset="/images/homepage-slider-800.webp 800w, /images/homepage-slider.webp 1380w"
       sizes="(max-width: 1280px) 100vw, 1240px"
-      alt="Sklenářství Ruská – Kompletní sklenářské služby, rámování a paspartování obrazů"
+      alt={i18n.heroAlt}
       width="1380"
       height="488"
       fetchpriority="high"

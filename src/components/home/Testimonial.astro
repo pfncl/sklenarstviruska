@@ -1,10 +1,17 @@
 ---
+import { t, type Locale } from '../../i18n/translations';
 
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const i18n = t(lang);
 ---
 
 <div class="testimonial">
   <div class="testimonial__content">
-    <p class="testimonial__text">&bdquo;S firmou Skloservis nemáme nic společného.&ldquo;</p>
+    <p class="testimonial__text">&bdquo;{i18n.testimonialText}&ldquo;</p>
   </div>
   <div class="testimonial__author">
     <img

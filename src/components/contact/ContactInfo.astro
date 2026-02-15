@@ -1,32 +1,41 @@
 ---
 import Icon from '../ui/Icon.astro';
-import { contact } from '../../data/contact';
+import { getContact } from '../../data/contact';
+import { t, type Locale } from '../../i18n/translations';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const contact = getContact(lang);
+const i18n = t(lang);
 ---
 
 <div class="contact-info">
   <p class="contact-info__intro">
-    Stavte se u nás na prodejně! Budeme se vám osobně věnovat, poradíme a doporučíme ta nejlepší řešení. Pokud si hned nebudeme vědět rady, tak se za vás spojíme se specialisty v oboru.
+    {i18n.contactIntro}
   </p>
 
   <div class="contact-info__item">
     <Icon name="map-pin" size={20} />
-    <p><strong>Adresa:</strong> {contact.address}</p>
+    <p><strong>{i18n.labelAddress}</strong> {contact.address}</p>
   </div>
 
   <div class="contact-info__item">
     <Icon name="phone" size={20} />
-    <p><strong>Telefon:</strong> <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a></p>
+    <p><strong>{i18n.labelPhone}</strong> <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a></p>
   </div>
 
   <div class="contact-info__item">
     <Icon name="mail" size={20} />
-    <p><strong>Email:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+    <p><strong>{i18n.labelEmail}</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
   </div>
 
   <div class="contact-info__item">
     <Icon name="clock" size={20} />
     <div>
-      <p><strong>Provozní doba:</strong></p>
+      <p><strong>{i18n.labelHours}</strong></p>
       {contact.hours.map((h) => (
         <p>{h.days}: {h.time}</p>
       ))}
@@ -35,7 +44,7 @@ import { contact } from '../../data/contact';
 
   <div class="contact-info__item">
     <Icon name="facebook" size={20} />
-    <p><strong>Facebook:</strong> <a href={contact.facebook} target="_blank" rel="noopener noreferrer">Sklenářství Ruská</a></p>
+    <p><strong>{i18n.labelFacebook}</strong> <a href={contact.facebook} target="_blank" rel="noopener noreferrer">Sklenářství Ruská</a></p>
   </div>
 </div>
 

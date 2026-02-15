@@ -14,6 +14,11 @@ export default defineConfig({
   adapter: cloudflare({
     platformProxy: { enabled: true },
   }),
+  i18n: {
+    defaultLocale: 'cs',
+    locales: ['cs', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
   env: {
     schema: {
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),

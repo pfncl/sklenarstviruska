@@ -1,6 +1,14 @@
 ---
 import Icon from '../ui/Icon.astro';
-import { mainServices } from '../../data/services';
+import { getMainServices } from '../../data/services';
+import type { Locale } from '../../i18n/translations';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const mainServices = getMainServices(lang);
 ---
 
 <div class="service-grid">

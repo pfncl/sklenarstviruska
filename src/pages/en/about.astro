@@ -1,25 +1,25 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProgressBar from '../components/about/ProgressBar.svelte';
-import Icon from '../components/ui/Icon.astro';
-import { t } from '../i18n/translations';
-import { getMainServices } from '../data/services';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProgressBar from '../../components/about/ProgressBar.svelte';
+import Icon from '../../components/ui/Icon.astro';
+import { t } from '../../i18n/translations';
+import { getMainServices } from '../../data/services';
 
-const lang = 'cs' as const;
+const lang = 'en' as const;
 const i18n = t(lang);
 const mainServices = getMainServices(lang);
 
 const progressItems = [
-  { label: 'Opracování skla', percentage: 100 },
-  { label: 'Montáže skla', percentage: 80 },
-  { label: 'Protipožární skla', percentage: 70 },
+  { label: 'Glass processing', percentage: 100 },
+  { label: 'Glass installation', percentage: 80 },
+  { label: 'Fire-resistant glass', percentage: 70 },
 ];
 ---
 
 <BaseLayout
   title={i18n.seoTitleAbout}
   description={i18n.seoDescAbout}
-  currentPath="/o-nas"
+  currentPath="/en/about"
   lang={lang}
 >
   <section class="section">

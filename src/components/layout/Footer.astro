@@ -1,13 +1,21 @@
 ---
+import { t, type Locale } from '../../i18n/translations';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const i18n = t(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <div class="container footer__inner">
-    <a href="/" class="footer__logo">
+    <a href={lang === 'en' ? '/en/' : '/'} class="footer__logo">
       <img src="/images/logo_sklo_footer.webp" alt="Sklenářství Ruská" width="300" height="33" loading="lazy" />
     </a>
-    <p class="footer__copy">&copy; {year} | Všechna práva vyhrazena</p>
+    <p class="footer__copy">&copy; {year} | {i18n.copyright}</p>
   </div>
 </footer>
 

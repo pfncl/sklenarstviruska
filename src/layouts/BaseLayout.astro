@@ -4,20 +4,24 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import MobileMenu from '../components/layout/MobileMenu.svelte';
 import ScrollToTop from '../components/layout/ScrollToTop.svelte';
+import { t, type Locale } from '../i18n/translations';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
   currentPath: string;
+  lang?: Locale;
 }
 
-const { title, description = 'Sklenářství Ruská – kompletní sklenářské služby v Praze 10 Vršovicích. Montáže skla, rámování, paspartování.', currentPath } = Astro.props;
+const { title, currentPath, lang = 'cs' } = Astro.props;
+const i18n = t(lang);
+const { description = i18n.seoDefaultDescription } = Astro.props;
 const canonicalUrl = new URL(currentPath, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="cs">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,7 +33,7 @@ const canonicalUrl = new URL(currentPath, Astro.site).href;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:locale" content={i18n.seoLocale} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,14 +42,14 @@ const canonicalUrl = new URL(currentPath, Astro.site).href;
     <slot name="head" />
   </head>
   <body>
-    <a href="#main" class="sr-only">Přeskočit na obsah</a>
-    <TopBar />
-    <Header currentPath={currentPath} />
-    <MobileMenu client:load />
+    <a href="#main" class="sr-only">{i18n.skipToContent}</a>
+    <TopBar lang={lang} />
+    <Header currentPath={currentPath} lang={lang} />
+    <MobileMenu lang={lang} client:load />
     <main id="main">
       <slot />
     </main>
-    <Footer />
-    <ScrollToTop client:load />
+    <Footer lang={lang} />
+    <ScrollToTop lang={lang} client:load />
   </body>
 </html>

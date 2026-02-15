@@ -1,6 +1,14 @@
 ---
 import Icon from '../ui/Icon.astro';
-import { contact } from '../../data/contact';
+import { getContact } from '../../data/contact';
+import type { Locale } from '../../i18n/translations';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const contact = getContact(lang);
 ---
 
 <div class="topbar">

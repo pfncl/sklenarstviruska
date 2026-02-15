@@ -1,16 +1,24 @@
 ---
 import Icon from '../ui/Icon.astro';
+import { t, type Locale } from '../../i18n/translations';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'cs' } = Astro.props;
+const i18n = t(lang);
 ---
 
 <section class="cta section--gray">
   <div class="container cta__inner">
     <div class="cta__text">
-      <h2 class="cta__title">Když montáž skla, tak od Sklenářství RUSKÁ.</h2>
-      <p class="cta__subtitle">Svěřte své sklo sklenářské firmě, která má praktické zkušenosti od roku 2006!</p>
+      <h2 class="cta__title">{i18n.ctaTitle}</h2>
+      <p class="cta__subtitle">{i18n.ctaSubtitle}</p>
     </div>
-    <a href="/kontakt" class="cta__button">
+    <a href={i18n.ctaLink} class="cta__button">
       <Icon name="download" size={18} />
-      <span>Kontakt</span>
+      <span>{i18n.ctaButton}</span>
     </a>
   </div>
 </section>

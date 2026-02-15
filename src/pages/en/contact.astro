@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactInfo from '../components/contact/ContactInfo.astro';
-import ContactForm from '../components/contact/ContactForm.svelte';
-import GoogleMap from '../components/contact/GoogleMap.svelte';
-import { t } from '../i18n/translations';
-import { getContact } from '../data/contact';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactInfo from '../../components/contact/ContactInfo.astro';
+import ContactForm from '../../components/contact/ContactForm.svelte';
+import GoogleMap from '../../components/contact/GoogleMap.svelte';
+import { t } from '../../i18n/translations';
+import { getContact } from '../../data/contact';
 
-const lang = 'cs' as const;
+const lang = 'en' as const;
 const i18n = t(lang);
 const contact = getContact(lang);
 ---
@@ -14,7 +14,7 @@ const contact = getContact(lang);
 <BaseLayout
   title={i18n.seoTitleContact}
   description={i18n.seoDescContact}
-  currentPath="/kontakt"
+  currentPath="/en/contact"
   lang={lang}
 >
   <section class="section">

@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { navigation } from '../../data/navigation';
+  import { t, type Locale } from '../../i18n/translations';
+  import { getNavigation } from '../../data/navigation';
+  import type { NavItem } from '../../data/navigation';
+
+  let { lang = 'cs' }: { lang?: Locale } = $props();
+  const i18n = $derived(t(lang));
+  const navigation: NavItem[] = $derived(getNavigation(lang));
 
   let isOpen = $state(false);
 
@@ -39,8 +45,8 @@
 
 {#if isOpen}
   <div class="overlay" onclick={close} role="presentation"></div>
-  <nav class="mobile-menu" aria-label="Mobilní navigace">
-    <button class="mobile-menu__close" onclick={close} aria-label="Zavřít menu">
+  <nav class="mobile-menu" aria-label={i18n.mobileNav}>
+    <button class="mobile-menu__close" onclick={close} aria-label={i18n.closeMenu}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
     <ul class="mobile-menu__list">
@@ -50,6 +56,14 @@
         </li>
       {/each}
     </ul>
+    <div class="mobile-menu__flags">
+      <a href="/" class="mobile-menu__flag" class:active={lang === 'cs'} aria-label="Česky" onclick={close}>
+        <svg viewBox="0 0 32 32" width="28" height="28"><clipPath id="cz-m"><circle cx="16" cy="16" r="16"/></clipPath><g clip-path="url(#cz-m)"><rect y="0" width="32" height="16" fill="#fff"/><rect y="16" width="32" height="16" fill="#d7141a"/><polygon points="0,0 16,16 0,32" fill="#11457e"/></g></svg>
+      </a>
+      <a href="/en/" class="mobile-menu__flag" class:active={lang === 'en'} aria-label="English" onclick={close}>
+        <svg viewBox="0 0 32 32" width="28" height="28"><clipPath id="gb-m"><circle cx="16" cy="16" r="16"/></clipPath><g clip-path="url(#gb-m)"><rect width="32" height="32" fill="#012169"/><path d="M0,0 L32,32 M32,0 L0,32" stroke="#fff" stroke-width="5.3"/><path d="M0,0 L32,32" stroke="#C8102E" stroke-width="3.5" clip-path="polygon(16 0, 32 0, 16 16, 32 32, 16 32, 16 16, 0 0)"/><path d="M32,0 L0,32" stroke="#C8102E" stroke-width="3.5" clip-path="polygon(0 0, 16 0, 16 16, 32 32, 16 32, 16 16)"/><rect x="12" width="8" height="32" fill="#fff"/><rect y="12" width="32" height="8" fill="#fff"/><rect x="13.5" width="5" height="32" fill="#C8102E"/><rect y="13.5" width="32" height="5" fill="#C8102E"/></g></svg>
+      </a>
+    </div>
   </nav>
 {/if}
 
@@ -112,5 +126,24 @@
 
   .mobile-menu__link:hover {
     color: var(--color-accent, #000543);
+  }
+
+  .mobile-menu__flags {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .mobile-menu__flag {
+    display: flex;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu__flag.active {
+    opacity: 0.4;
+    pointer-events: none;
   }
 </style>

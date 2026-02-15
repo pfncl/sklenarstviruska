@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { t, type Locale } from '../../i18n/translations';
+
+  let { lang = 'cs' }: { lang?: Locale } = $props();
+  const i18n = $derived(t(lang));
   let visible = $state(false);
 
   $effect(() => {
@@ -15,7 +19,7 @@
 </script>
 
 {#if visible}
-  <button class="scroll-top" onclick={scrollToTop} aria-label="Zpět nahoru">
+  <button class="scroll-top" onclick={scrollToTop} aria-label={i18n.scrollToTop}>
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </button>
 {/if}
