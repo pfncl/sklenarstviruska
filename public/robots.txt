@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sklenarstviruska.cz/sitemap.xml
+Sitemap: https://sklenarstviruska.cz/sitemap-index.xml

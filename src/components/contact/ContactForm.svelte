@@ -7,8 +7,14 @@
   let email = $state('');
   let telephone = $state('');
   let message = $state('');
+  let honeypot = $state('');
+  let turnstileToken = $state('');
   let status = $state<'idle' | 'submitting' | 'success' | 'error'>('idle');
   let errorMessage = $state('');
+
+  let turnstileEl: HTMLDivElement | undefined = $state();
+  let turnstileWidgetId: string | undefined;
+  let turnstileLoaded = false;
 
   let isValid = $derived(
     name.trim() !== '' &&
@@ -18,34 +24,76 @@
     (variant === 'poradna' || telephone.trim() !== '')
   );
 
+  function loadTurnstile() {
+    if (turnstileLoaded) return;
+    turnstileLoaded = true;
+
+    function renderWidget() {
+      if (!turnstileEl || turnstileWidgetId !== undefined) return;
+      turnstileWidgetId = (window as any).turnstile.render(turnstileEl, {
+        sitekey: '0x4AAAAAACb2orZs8ymvai7p',
+        theme: 'light',
+        language: 'cs',
+        callback: (token: string) => { turnstileToken = token; },
+        'expired-callback': () => { turnstileToken = ''; },
+        'error-callback': () => { turnstileToken = ''; },
+      });
+    }
+
+    if ((window as any).turnstile) {
+      renderWidget();
+    } else if (!document.querySelector('script[src*="turnstile"]')) {
+      (window as any).onTurnstileLoad = renderWidget;
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit';
+      script.async = true;
+      document.head.appendChild(script);
+    } else {
+      (window as any).onTurnstileLoad = renderWidget;
+    }
+  }
+
+  $effect(() => {
+    return () => {
+      if (turnstileWidgetId !== undefined && (window as any).turnstile) {
+        (window as any).turnstile.remove(turnstileWidgetId);
+        turnstileWidgetId = undefined;
+      }
+    };
+  });
+
   async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     if (!isValid) return;
 
+    if (!turnstileToken) {
+      errorMessage = 'Ověření nebylo dokončeno. Zkuste to prosím znovu.';
+      status = 'error';
+      return;
+    }
+
     status = 'submitting';
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          telephone: telephone.trim(),
-          message: message.trim(),
-          form: variant,
-        }),
+      const { actions } = await import('astro:actions');
+      const { error } = await actions.sendMessage({
+        name: name.trim(),
+        email: email.trim(),
+        telephone: telephone.trim(),
+        message: message.trim(),
+        form: variant,
+        honeypot,
+        turnstileToken,
       });
 
-      if (res.ok) {
+      if (error) {
+        errorMessage = error.message || 'Při odesílání došlo k chybě. Zkuste to prosím znovu.';
+        status = 'error';
+      } else {
         status = 'success';
         name = '';
         email = '';
         telephone = '';
         message = '';
-      } else {
-        const data = await res.json().catch(() => ({}));
-        errorMessage = data.error || 'Při odesílání došlo k chybě. Zkuste to prosím znovu.';
-        status = 'error';
       }
     } catch {
       errorMessage = 'Při odesílání došlo k chybě. Zkuste to prosím znovu.';
@@ -54,7 +102,7 @@
   }
 </script>
 
-<form class="form" onsubmit={handleSubmit} novalidate>
+<form class="form" onsubmit={handleSubmit} onfocusin={loadTurnstile} novalidate>
   {#if status === 'success'}
     <div class="form__alert form__alert--success">
       Děkujeme za vaši zprávu! Ozveme se vám co nejdříve.
@@ -107,6 +155,15 @@
     ></textarea>
   </div>
 
+  <div class="form__field form__turnstile">
+    <div bind:this={turnstileEl}></div>
+  </div>
+
+  <!-- Honeypot -->
+  <div class="form__honeypot" aria-hidden="true" tabindex="-1">
+    <label>Email <input type="text" bind:value={honeypot} autocomplete="off" tabindex="-1"></label>
+  </div>
+
   <button
     type="submit"
     class="form__submit"
@@ -147,6 +204,18 @@
   .form__textarea {
     resize: vertical;
     min-height: 120px;
+  }
+
+  .form__turnstile {
+    margin-bottom: 0;
+  }
+
+  .form__honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
   }
 
   .form__submit {
@@ -191,5 +260,4 @@
     color: #721c24;
     border: 1px solid #f5c6cb;
   }
-
 </style>

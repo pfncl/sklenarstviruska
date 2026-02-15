@@ -1,16 +1,32 @@
 {
 	"main": "dist/_worker.js/index.js",
 	"name": "sklenarstvi-ruska",
-  "compatibility_date": "2026-02-15",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
+	"compatibility_date": "2026-02-15",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"routes": [
+		{
+			"pattern": "sklenarstviruska.cz",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.sklenarstviruska.cz",
+			"custom_domain": true
+		}
+	],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist"
 	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "sklenarstvi-messages",
+			"database_id": "f85cc8e8-710f-48a7-9d0b-c0ea7e1d627b"
+		}
+	],
 	"observability": {
-    "enabled": true
-  }
+		"enabled": true
+	}
 }
