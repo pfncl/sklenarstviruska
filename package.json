@@ -23,5 +23,8 @@
     "resend": "^6.9.2",
     "svelte": "^5.51.1",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.65.0"
   }
 }
