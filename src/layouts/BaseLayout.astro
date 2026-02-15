@@ -31,6 +31,11 @@ const canonicalUrl = new URL(currentPath, Astro.site).href;
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="cs_CZ" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" /></noscript>
+    <slot name="head" />
   </head>
   <body>
     <a href="#main" class="sr-only">Přeskočit na obsah</a>
