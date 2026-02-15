@@ -53,7 +53,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.4rem;
-    font-size: 0.875rem;
+    font-size: 0.990rem;
     font-weight: 600;
     color: var(--color-dark, #111);
   }
