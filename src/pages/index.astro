@@ -1,17 +1,84 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import ServiceGrid from '../components/home/ServiceGrid.astro';
+import Testimonial from '../components/home/Testimonial.astro';
+import CtaBanner from '../components/home/CtaBanner.astro';
+import { serviceIntro } from '../data/services';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Sklenářství Ruská | Praha 10 | Vršovice" currentPath="/">
+  <HeroSection />
+
+  <section class="section">
+    <div class="container">
+      <div class="home-grid">
+        <div class="home-col home-col--sidebar">
+          <h2>Sklenářství Ruská?</h2>
+          <p>{serviceIntro.heading}</p>
+          <ul>
+            {serviceIntro.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="home-col home-col--main">
+          <h2>Produkty a služby</h2>
+          <ServiceGrid />
+        </div>
+
+        <div class="home-col home-col--sidebar">
+          <h2>Důležité upozornění</h2>
+          <Testimonial />
+          <div class="home-image">
+            <img src="/images/image-1.jpg" alt="Sklenářství Ruská - ukázka práce" width="360" height="270" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>
+
+<style>
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .home-col h2 {
+    font-size: 1.50rem;
+    margin-bottom: var(--space-md);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .home-image {
+    margin-top: var(--space-md);
+  }
+
+  .home-image img {
+    border-radius: var(--radius);
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .home-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .home-col--sidebar:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 778px) {
+    .home-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

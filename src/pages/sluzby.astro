@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/ui/Icon.astro';
+import { mainServices, additionalServices, serviceIntro } from '../data/services';
+---
+
+<BaseLayout
+  title="Služby – Sklenářství Ruská | Praha 10 | Vršovice"
+  description="Kompletní sklenářské služby – broušení, vrtání, lepení, pískování, fazetování, montáže skla, rámování, paspartování."
+  currentPath="/sluzby"
+>
+  <section class="section">
+    <div class="container">
+      <div class="services-top">
+        <div class="services-main">
+          <div class="services-cards">
+            {mainServices.map((service) => (
+              <div class="service-card-lg">
+                <div class="service-card-lg__icon">
+                  <Icon name={service.icon} size={32} />
+                </div>
+                <h3 class="service-card-lg__title">{service.title}</h3>
+                <p class="service-card-lg__desc">{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="services-sidebar">
+          <h2>{serviceIntro.heading}</h2>
+          <ul>
+            {serviceIntro.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--pattern">
+    <div class="container">
+      <div class="additional-grid">
+        {[...mainServices, ...additionalServices].map((service) => (
+          <div class="additional-card">
+            <div class="additional-card__icon">
+              <Icon name={service.icon} size={20} />
+            </div>
+            <div>
+              <h3 class="additional-card__title">{service.title}</h3>
+              {service.description && <p class="additional-card__desc">{service.description}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .services-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .service-card-lg {
+    text-align: center;
+    padding: var(--space-md);
+  }
+
+  .service-card-lg__icon {
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .service-card-lg__title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card-lg__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .services-sidebar h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-md);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .section--pattern {
+    background: transparent;
+  }
+
+  .additional-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+  }
+
+  .additional-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.9);
+    padding: var(--space-sm);
+    border-radius: var(--radius);
+  }
+
+  .additional-card__icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .additional-card__title {
+    font-size: 0.9375rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .additional-card__desc {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .services-top {
+      grid-template-columns: 1fr;
+    }
+
+    .additional-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 778px) {
+    .services-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .additional-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

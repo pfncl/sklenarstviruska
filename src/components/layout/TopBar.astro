@@ -18,6 +18,7 @@ import { contact } from '../../data/contact';
         <Icon name="map-pin" size={14} />
         <span>{contact.addressShort}</span>
       </span>
+      <span class="topbar__item topbar__item--tagline">{contact.tagline}</span>
     </div>
     <div class="topbar__social">
       <a href={contact.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -72,7 +73,8 @@ import { contact } from '../../data/contact';
   }
 
   @media (max-width: 778px) {
-    .topbar__item--address {
+    .topbar__item--address,
+    .topbar__item--tagline {
       display: none;
     }
 

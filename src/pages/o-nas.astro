@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProgressBar from '../components/about/ProgressBar.svelte';
+import Icon from '../components/ui/Icon.astro';
+import { mainServices } from '../data/services';
+
+const progressItems = [
+  { label: 'Opracování skla', percentage: 100 },
+  { label: 'Montáže skla', percentage: 80 },
+  { label: 'Protipožární skla', percentage: 70 },
+];
+---
+
+<BaseLayout
+  title="O nás – Sklenářství Ruská | Praha 10 | Vršovice"
+  description="Zakládáme si na osobním přístupu a kvalitním servisu. Každá zakázka je pro nás výzvou. Sklenářské zkušenosti od roku 2006."
+  currentPath="/o-nas"
+>
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-col">
+          <h2>Proč to děláme</h2>
+          <blockquote>
+            Sklo vnímáme jako symbol dokonalosti. Stavebnictví se dělí na dobu před objevem plochého skla a na dobu jeho rozsáhlého používání.
+          </blockquote>
+        </div>
+
+        <div class="about-col">
+          <h2>Co nás baví</h2>
+          <ul>
+            <li>Dokonalá krása a čistota skla.</li>
+            <li>Vidět interiéry a stavby s našim sklem.</li>
+            <li>Učit se novým věcem a technologiím.</li>
+          </ul>
+        </div>
+
+        <div class="about-col">
+          <h2>Naše zkušenosti</h2>
+          <ProgressBar items={progressItems} client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--gray">
+    <div class="container">
+      <h2 class="section-heading">V čem jsme dobří</h2>
+      <p class="section-text">
+        Zakládáme si na osobním přístupu a kvalitním servisu. Každá zakázka je pro nás výzvou, jak ji udělat dokonale, abychom ctili krásu skla a jeho výjimečnost. U nás je prioritou spokojený zákazník.
+      </p>
+      <p class="section-text">
+        Místo slov máme raději činy, proto si prohlédněte naše reference a udělejte si názor sami.
+      </p>
+
+      <div class="benefits-grid">
+        {mainServices.map((service) => (
+          <div class="benefit-card">
+            <div class="benefit-card__icon">
+              <Icon name={service.icon} size={32} />
+            </div>
+            <div>
+              <h3 class="benefit-card__title">{service.title}</h3>
+              <p class="benefit-card__desc">{service.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .about-col h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-md);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .section-heading {
+    margin-bottom: var(--space-md);
+  }
+
+  .section-text {
+    max-width: 800px;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .benefit-card {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .benefit-card__icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .benefit-card__title {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .benefit-card__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 778px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

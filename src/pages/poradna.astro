@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Accordion from '../components/faq/Accordion.svelte';
+import ContactForm from '../components/contact/ContactForm.svelte';
+import { faqItems } from '../data/faq';
+import { mainServices } from '../data/services';
+import Icon from '../components/ui/Icon.astro';
+---
+
+<BaseLayout
+  title="Poradna – Sklenářství Ruská | Praha 10 | Vršovice"
+  description="Nejčastěji kladené otázky o skle – kalené sklo, vrstvené sklo, izolační sklo, bezpečnostní sklo, broušení hran a cenové nabídky."
+  currentPath="/poradna"
+>
+  <section class="section">
+    <div class="container">
+      <div class="poradna-grid">
+        <div class="poradna-main">
+          <h1>Nejčastěji kladené otázky:</h1>
+          <Accordion items={faqItems} client:visible />
+
+          <div class="poradna-contact">
+            <h2>Nenašli jste odpověď?</h2>
+            <p>
+              Našim zákazníkům, kteří u nás nakupují nebo chtějí nakoupit, dáváme konzultace zdarma. Pokud u nás nechcete nic koupit a nenašli jste odpověď v naší poradně, tak vám můžeme doporučit knowledge databázi o skle <a href="https://www.sklovestavebnictvi.cz" target="_blank" rel="noopener noreferrer">Sklovestavebnictvi.cz</a>.
+            </p>
+            <ContactForm variant="poradna" client:visible />
+          </div>
+        </div>
+
+        <aside class="poradna-sidebar">
+          <h2>Naše služby:</h2>
+          <ul class="sidebar-services">
+            {mainServices.map((service) => (
+              <li>
+                <Icon name={service.icon} size={18} />
+                <a href="/sluzby">{service.title}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .poradna-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .poradna-main h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .poradna-contact {
+    margin-top: var(--space-xl);
+  }
+
+  .poradna-contact h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .poradna-contact p {
+    margin-bottom: var(--space-lg);
+  }
+
+  .poradna-sidebar h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-md);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .sidebar-services {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sidebar-services li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-accent);
+  }
+
+  .sidebar-services li:last-child {
+    border-bottom: none;
+  }
+
+  .sidebar-services a {
+    font-weight: var(--fw-semibold);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 1024px) {
+    .poradna-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

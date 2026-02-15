@@ -19,7 +19,7 @@ body {
   font-size: 16px;
   line-height: 1.7;
   color: var(--color-dark);
-  background: var(--color-white);
+  background: var(--color-white) url('/images/herald.webp') repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-primary);
   font-weight: var(--fw-bold);
   line-height: 1.3;
-  color: var(--color-dark);
+  color: var(--color-accent);
 }
 
 h1 { font-size: 2.25rem; }
@@ -56,7 +56,9 @@ h6 { font-size: 1rem; }
 
 p {
   margin-bottom: 1rem;
-  color: var(--color-gray);
+  color: var(--color-dark);
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 ul, ol {
@@ -64,8 +66,10 @@ ul, ol {
 }
 
 li {
-  margin-bottom: 0.5rem;
-  color: var(--color-gray);
+  margin-bottom: 0.35rem;
+  color: var(--color-dark);
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 blockquote {
@@ -74,6 +78,7 @@ blockquote {
   margin: 1rem 0;
   font-style: italic;
   color: var(--color-gray);
+  line-height: 1.4;
 }
 
 .container {

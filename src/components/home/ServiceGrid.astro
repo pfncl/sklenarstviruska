@@ -1,0 +1,62 @@
+---
+import Icon from '../ui/Icon.astro';
+import { mainServices } from '../../data/services';
+---
+
+<div class="service-grid">
+  {mainServices.map((service) => (
+    <div class="service-card">
+      <div class="service-card__icon">
+        <Icon name={service.icon} size={20} />
+      </div>
+      <div class="service-card__content">
+        <h3 class="service-card__title">{service.title}</h3>
+        <p class="service-card__desc">{service.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .service-card {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .service-card__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--color-accent);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .service-card__title {
+    font-size: 1rem;
+    font-weight: var(--fw-bold);
+    margin-bottom: 0.35rem;
+  }
+
+  .service-card__desc {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media (max-width: 778px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
