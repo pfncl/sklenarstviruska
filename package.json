@@ -1,0 +1,25 @@
+{
+  "name": "sklenarstvi-ruska",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/svelte": "^7.2.5",
+    "astro": "^5.17.1",
+    "resend": "^6.9.2",
+    "svelte": "^5.51.1",
+    "typescript": "^5.9.3"
+  }
+}
